@@ -7,6 +7,7 @@ const Wrapper = styled(Box)`
     & > button, & > p, & > div{
         margin-right:40px;
         font-size:14px;
+        align-items:center
     }
 `
 
@@ -14,7 +15,6 @@ const CartWrapper = styled(Box)`
     display:flex;
     & > svg, &>p{
         font-size:14px;
-        margin-top:3px;
     }
 `
 
