@@ -48,7 +48,7 @@ const Banner = () => {
         >
             {
                 bannerData.map(data=>(
-                    <Image src={data.url} alt="banner" id={data.id} />
+                    <Image src={data.url} alt="banner" key={data.id} />
                 ))
             }
 

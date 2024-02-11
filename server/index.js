@@ -14,8 +14,4 @@ app.get("/",(req,res)=>{res.send("Hii")})
 
 app.listen(process.env.PORT,(req,res)=>{
     console.log("Server Running at Port no: ", process.env.PORT)
-})
-
-
-
-
+})   

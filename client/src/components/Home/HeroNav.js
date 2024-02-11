@@ -1,20 +1,22 @@
-import {Box, styled, Typography, createTheme, ThemeProvider} from "@mui/material"
+import {Box, styled, Typography, ThemeProvider} from "@mui/material"
 import Carousel from "react-multi-carousel"
 import { navData } from "../../constants/data";
+import { Theme } from "../../theme/Theme";
 
 
-const theme = createTheme({
-  breakpoints: {
-    values: {
-      xxs: 0, // small phone
-      xs: 300, // phone
-      sm: 600, // tablets
-      md: 900, // small laptop
-      lg: 1200, // desktop
-      xl: 1536 // large screens
-    }
-  }
-});
+
+// const theme = createTheme({
+//   breakpoints: {
+//     values: {
+//       xxs: 0, // small phone
+//       xs: 300, // phone
+//       sm: 600, // tablets
+//       md: 900, // small laptop
+//       lg: 1200, // desktop
+//       xl: 1536 // large screens
+//     }
+//   }
+// });
 
 
 
@@ -66,7 +68,7 @@ const HeroNav = () => {
 
 
   return (
-    <ThemeProvider theme={theme} >
+    <ThemeProvider theme={Theme} >
       <Box sx={HeroNavData} >
           <Carousel
               responsive={responsive}
@@ -75,8 +77,8 @@ const HeroNav = () => {
           >
 
           {
-              navData.map(data=>(
-                  <Container>
+              navData.map((data,index)=>(
+                  <Container key={index} >
                       <img src={data.url} alt={data.text} style={{width:"64px"}} />
                       <Texted>{data.text}</Texted>
                   </Container>
