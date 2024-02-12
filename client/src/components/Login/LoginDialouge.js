@@ -1,8 +1,10 @@
 import {Dialog, TextField, Grid, Typography, Button, ThemeProvider, styled} from '@mui/material'
 import { Theme } from '../../theme/Theme'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { loginApi, registerApi } from '../../services/Apis'
 import { ToastContainer, toast } from 'react-toastify';
+import { dataContext } from '../../contextApi/DataProvider';
+
 
 const Component = styled(Grid)`
     height:71vh; 
@@ -110,6 +112,8 @@ const LoginDialouge = ({open,setOpen}) => {
         })
     }
 
+    const {account,setAccount} = useContext(dataContext)
+
     const handleRegister = async(req,res) =>{
         const {name,phone,email,password} = data;
 
@@ -137,6 +141,7 @@ const LoginDialouge = ({open,setOpen}) => {
             const response  = await  loginApi(data);
             if(response.status===200){
                 sessionStorage.setItem('accessToke',response.data.token)
+                setAccount({name:response.data.data.name,phone:response.data.data.phone,email:response.data.data.email})
                 handleClose()
                 alert("user loggedin!!")
             }else{
@@ -145,7 +150,6 @@ const LoginDialouge = ({open,setOpen}) => {
         }
 
     }
-
 
   return (
     <Dialog open={open} onClose={()=>{handleClose()}} PaperProps={{sx:{maxWidth:'unsert', maxHeight:'unsert'}}} >
