@@ -1,6 +1,8 @@
 import {Dialog, TextField, Grid, Typography, Button, ThemeProvider, styled} from '@mui/material'
 import { Theme } from '../../theme/Theme'
 import { useState } from 'react'
+import { registerApi } from '../../services/Apis'
+import { ToastContainer, toast } from 'react-toastify';
 
 const Component = styled(Grid)`
     height:71vh; 
@@ -108,6 +110,15 @@ const LoginDialouge = ({open,setOpen}) => {
         })
     }
 
+    const handleRegister = async(req,res) =>{
+        const response  = await registerApi(data);
+        if(response.status===200){
+            toggleData(true)
+        }else{
+            toast.error(response.response.data.msg)
+        }
+    }   
+
 
   return (
     <Dialog open={open} onClose={()=>{handleClose()}} PaperProps={{sx:{maxWidth:'unsert', maxHeight:'unsert'}}} >
@@ -142,13 +153,14 @@ const LoginDialouge = ({open,setOpen}) => {
                         <TextField variant="standard" label="Enter your Phone" type="text" name='phone' value={data.phone} onChange={(e)=>{setData({...data,phone:e.target.value})}} />
                         <TextField variant="standard" label="Enter your Email" type="email" name="email" value={data.email} onChange={(e)=>{setData({...data,email:e.target.value})}} />
                         <TextField variant="standard" label="Enter your password" type="password" name="password" value={data.password} onChange={(e)=>{setData({...data,password:e.target.value})}}/>
-                        <LoginButton> Sign Up </LoginButton>
+                        <LoginButton onClick={()=>{handleRegister()}} > Sign Up </LoginButton>
                         <CreateAccountText  onClick={()=>{toggleData(true)}} >Already have an account?</CreateAccountText>
                     </Wrapper>
                 </Component>
             }
         
         </ThemeProvider>
+        <ToastContainer/>
     </Dialog>
   )
 }
