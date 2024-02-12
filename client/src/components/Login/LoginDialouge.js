@@ -1,7 +1,7 @@
 import {Dialog, TextField, Grid, Typography, Button, ThemeProvider, styled} from '@mui/material'
 import { Theme } from '../../theme/Theme'
 import { useState } from 'react'
-import { registerApi } from '../../services/Apis'
+import { loginApi, registerApi } from '../../services/Apis'
 import { ToastContainer, toast } from 'react-toastify';
 
 const Component = styled(Grid)`
@@ -111,13 +111,40 @@ const LoginDialouge = ({open,setOpen}) => {
     }
 
     const handleRegister = async(req,res) =>{
-        const response  = await registerApi(data);
-        if(response.status===200){
-            toggleData(true)
+        const {name,phone,email,password} = data;
+
+        if(!name || !phone || !email || !password){
+            toast.error("All input are neccessary!!")
         }else{
-            toast.error(response.response.data.msg)
+            const response  = await registerApi(data);
+            if(response.status===200){
+                toast.success("user registered!!")
+                toggleData(true)
+            }else{
+                toast.error(response.response.data.msg)
+            }
         }
     }   
+
+
+    const handleLogin = async(req,res) =>{
+
+        const {email,password} = data
+
+        if(!email || !password){
+            toast.error("All input are neccessary!!")
+        }else{
+            const response  = await  loginApi(data);
+            if(response.status===200){
+                sessionStorage.setItem('accessToke',response.data.token)
+                handleClose()
+                alert("user loggedin!!")
+            }else{
+                toast.error(response.response.data.msg)
+            }
+        }
+
+    }
 
 
   return (
@@ -135,7 +162,7 @@ const LoginDialouge = ({open,setOpen}) => {
                             <TextField variant="standard" label="Enter your email address" name="email" type="email" value={data.email} onChange={(e)=>{setData({...data,email:e.target.value})}} />
                             <TextField variant="standard" label="Enter your password" name="password" type="password" value={data.password} onChange={(e)=>{setData({...data,password:e.target.value})}} />
                             <Text>By continuing, you agree to flipkart's Term of use and privacy policy. </Text>
-                            <LoginButton> Login </LoginButton>
+                            <LoginButton onClick={(e)=>{handleLogin()}} > Login </LoginButton>
                             <Typography style={{textAlign:'center'}} >OR</Typography>
                             <RequestOtpButton> Request OTP </RequestOtpButton>
                             <CreateAccountText onClick={()=>{toggleData(false)}} >New to Flipkart? create an account</CreateAccountText>
@@ -160,7 +187,9 @@ const LoginDialouge = ({open,setOpen}) => {
             }
         
         </ThemeProvider>
-        <ToastContainer/>
+        <ToastContainer
+            autoClose={1500}
+        />
     </Dialog>
   )
 }
