@@ -43,14 +43,22 @@ const CustomButton = () => {
 
     const [openDialog, setOpenDialog] = useState(false);
     const {account, setAccount} = useContext(dataContext)
-
+    console.log(account)
     
+    let query = true
+    if(account.name===''){
+        query = false
+    }else{
+        query = true
+    }
+    // {"name":"","email":"","phone":""}
     return (
         <Wrapper>
             
             {
-                account.name && account.email ? <Profile accountName={account.name} accountEmail={account.email} setaccount={setAccount} />:  <LoginButton  variant="contained" onClick={()=>{setOpenDialog(true)}}>Login</LoginButton>
+                query ? <Profile accountName={account.name} accountEmail={account.email} setaccount={setAccount} /> : <LoginButton  variant="contained" onClick={()=>{setOpenDialog(true)}}>Login</LoginButton>
             }
+            {/* query ? <Profile accountName={account.name} accountEmail={account.email} setaccount={setAccount} /> : <LoginButton  variant="contained" onClick={()=>{setOpenDialog(true)}}>Login</LoginButton> */}
                      
             <Typography style={{marginTop:3,width:120}} >Become a Seller</Typography>
             <Typography style={{marginTop:3}}>More..</Typography>

@@ -21,15 +21,11 @@ const Profile = ({accountName, setaccount}) => {
         setOpen(null);
     };
 
-
+   
     const handleLogout = () =>{
-        setaccount({
-            name:"",
-            email:"",
-            phone:""
-        })
+        window.localStorage.removeItem("user")      
         handleClose()
-
+        window.location.assign("/")
     }
 
   return (

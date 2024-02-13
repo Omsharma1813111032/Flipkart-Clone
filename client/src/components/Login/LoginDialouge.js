@@ -140,7 +140,7 @@ const LoginDialouge = ({open,setOpen}) => {
         }else{
             const response  = await  loginApi(data);
             if(response.status===200){
-                sessionStorage.setItem('accessToke',response.data.token)
+                sessionStorage.setItem('accessToken',response.data.token)
                 setAccount({...account,name:response.data.data.name,phone:response.data.data.phone,email:response.data.data.email})
                 setData({email:"",password:""})
                 alert("user loggedin!!")
