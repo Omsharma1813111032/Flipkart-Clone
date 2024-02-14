@@ -9,3 +9,7 @@ export const registerApi = async(data)=>{
 export const loginApi = async(data)=>{
     return await commonApiFucntion( 'POST',`${API_URL}/login`,data);
 }
+
+export const getProductApi = async()=>{
+    return await commonApiFucntion( 'GET',`${API_URL}/products`,"");
+}

@@ -11,7 +11,9 @@ app.use(cors({
 
 
 const {user} = require("./routes/userRoutes");
+const product = require("./routes/productRoutes");
 app.use(user)
+app.use(product)
 
 
 app.listen(process.env.PORT,(req,res)=>{
